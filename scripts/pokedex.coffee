@@ -14,14 +14,13 @@ module.exports = (robot) ->
     # res.send "Requested Pokémon: #{pokemon.toLowerCase()}"
     res.http("http://pokeapi.co/api/v2/pokemon/#{pokemon.toLowerCase()}")
       .get() (err, msg, body) ->
-        try
-          res.send "HERE!"
-          json = JSON.parse(body)
-          res.send "   Pokémon: #{json.name}\n
-            Height: #{json.height/10} meters\n
-            Weight: #{json.weight/10} kilograms\n"
-        catch err
-          res.send "That might not be a Pokémon..."
+        switch msg.statusCode
+          when 200
+            info = JSON.parse(body)
+            res.send "#{info}"
+            res.send "Pokémon: #{info.name}\nHeight: #{info.height/10} meters\nWeight: #{info.weight/10} kilograms\n"
+          else
+            res.send "That might not be a Pokémon..."
 
   robot.error (err, res) ->
     robot.logger.error "DOES NOT COMPUTE"
