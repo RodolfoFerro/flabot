@@ -21,7 +21,7 @@ module.exports = (robot) ->
       res.reply "Opening #{doorType} doors"
 
   robot.hear /I like pie/i, (res) ->
-    res.emote "makes a freshly baked pie"
+    res.emote "*Makes a freshly baked pie...*"
 
   lulz = ['lol', 'rofl', 'lmao']
 
