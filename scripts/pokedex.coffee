@@ -17,7 +17,7 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            res.send "Pokémon: #{info.name}\nHeight: #{info.height/10} meters\nWeight: #{info.weight/10} kilograms\nImage: #{info.forms[0].url.sprites.front_default}\n"
+            res.send "Pokémon: #{info.name}\nHeight: #{info.height/10} meters\nWeight: #{info.weight/10} kilograms\nImage: #{info.forms[0].url.sprites}\n"
           else
             res.send "That might not be a Pokémon..."
 
