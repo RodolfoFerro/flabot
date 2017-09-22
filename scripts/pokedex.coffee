@@ -11,8 +11,7 @@ module.exports = (robot) ->
 
   robot.respond /pokedex (.*)/i, (res) ->
     pokemon = res.match[1]
-    res.reply "Pokémon requested: #{pokemon}."
-    robot.http("http://pokeapi.co/api/v2/pokemon/#{pokemon}")
+    res.http("http://pokeapi.co/api/v2/pokemon/#{pokemon.toLowerCase()}")
       .get() (err, res, body) ->
         try
           json = JSON.parse(body)
