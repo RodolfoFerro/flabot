@@ -12,8 +12,7 @@ module.exports = (robot) ->
   robot.respond /pokedex (.*)/i, (res) ->
     pokemon = res.match[1]
     # res.send "Requested Pokémon: #{pokemon.toLowerCase()}"
-    res.http("http://pokeapi.co/api/v2/pokemon/#{pokemon.toLowerCase()}")
-      .header('Content-Type', 'application/json')
+    res.http("https://pokeapi.co/api/v2/pokemon/#{pokemon.toLowerCase()}")
       .get() (err, msg, body) ->
         res.send "#{msg.statusCode}"
         switch msg.statusCode
