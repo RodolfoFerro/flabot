@@ -1,12 +1,6 @@
 # Description:
 #   Script that comsumes the Pokéapi to return Pokémon info.
 #
-# Dependencies:
-#   "<module name>": "<module version>"
-#
-# Configuration:
-#   LIST_OF_ENV_VARS_TO_SET
-#
 # Commands:
 #   hubot pokedex <pokemon> - Looks for that Pokémon's info.
 #   hubot pokedex <id> - Looks for that Pokémon's info.
@@ -24,7 +18,6 @@ module.exports = (robot) ->
 
   robot.respond /pokedex (.*)/i, (res) ->
     pokemon = res.match[1]
-    # res.send "Requested Pokémon: #{pokemon.toLowerCase()}"
     robot.http("https://pokeapi.co/api/v2/pokemon/#{pokemon.toLowerCase()}/")
       .get() (err, msg, body) ->
         switch msg.statusCode
