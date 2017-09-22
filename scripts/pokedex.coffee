@@ -9,19 +9,19 @@ module.exports = (robot) ->
   robot.hear /tacos/i, (res) ->
     res.send "TACOS?! YAAAS! WHEN?! WHERE?! 🌮🌮🌮"
 
-  robot.respond /pokedex (.*)/i, (res) ->
-    pokemon = res.match[1]
-    res.send "Requested Pokémon: #{pokemon.toLowerCase()}"
-    res.http("http://pokeapi.co/api/v2/pokemon/#{pokemon.toLowerCase()}")
-      .headers(Accept: 'application/json')
+  robot.respond /pokedex (.*)/i, (msg) ->
+    pokemon = msg.match[1]
+    # res.send "Requested Pokémon: #{pokemon.toLowerCase()}"
+    msg.http("http://pokeapi.co/api/v2/pokemon/#{pokemon.toLowerCase()}")
       .get() (err, res, body) ->
         try
+          msg.send "HERE!"
           json = JSON.parse(body)
-          res.send "   Pokémon: #{json.name}\n
+          msg.send "   Pokémon: #{json.name}\n
      Height: #{json.height/10} meters\n
      Weight: #{json.weight/10} kilograms\n"
         catch error
-          res.send "That might not be a Pokémon..."
+          msg.send "That might not be a Pokémon..."
 
   robot.error (err, res) ->
     robot.logger.error "DOES NOT COMPUTE"
