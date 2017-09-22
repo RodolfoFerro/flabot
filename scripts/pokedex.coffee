@@ -1,8 +1,21 @@
 # Description:
 #   Script that comsumes the Pokéapi to return Pokémon info.
 #
+# Dependencies:
+#   "<module name>": "<module version>"
+#
+# Configuration:
+#   LIST_OF_ENV_VARS_TO_SET
+#
+# Commands:
+#   hubot pokedex <pokemon> - Looks for that Pokémon's info.
+#   hubot pokedex <id> - Looks for that Pokémon's info.
+#
+# Notes:
+#   <optional notes required for the script>
+#
 # Author:
-#   https://github.com/RodolfoFerro/
+#   RodolfoFerro
 
 module.exports = (robot) ->
 
