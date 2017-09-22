@@ -11,11 +11,13 @@ module.exports = (robot) ->
 
   robot.respond /pokedex (.*)/i, (res) ->
     pokemon = res.match[1]
+    res.send "Requested Pokémon: #{pokemon.toLowerCase()}"
     res.http("http://pokeapi.co/api/v2/pokemon/#{pokemon.toLowerCase()}")
+      .headers(Accept: 'application/json')
       .get() (err, res, body) ->
         try
           json = JSON.parse(body)
-          res.send "Pokémon: #{json.name}\n
+          res.send "   Pokémon: #{json.name}\n
      Height: #{json.height/10} meters\n
      Weight: #{json.weight/10} kilograms\n"
         catch error
