@@ -20,7 +20,7 @@ module.exports = (robot) ->
 
   # Function that activates whenever somebody mentions the word "xkcd"
   robot.hear /xkcd/i, (res) ->
-    robot.http("https://xkcd.com/info.0.json")
+    res.http("https://xkcd.com/info.0.json")
       .get() (err, msg, body) ->
         switch msg.statusCode
           when 200
