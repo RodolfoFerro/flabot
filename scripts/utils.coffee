@@ -95,6 +95,8 @@ module.exports = (robot) ->
 
   # Thanking Hubot
   robot.respond /thank you/i, (res) ->
+    robot.brain.set 'totalInteractions', interactions + 1
+    interactions = robot.brain.get('totalInteractions') * 1 or 0
     res.send "You're welcome!"
 
   # Error handling
