@@ -19,13 +19,13 @@ module.exports = (robot) ->
     res.send "TACOS?! YAAAS! WHEN?! WHERE?! 🌮🌮🌮"
 
   # Function that activates whenever somebody mentions the word "xkcd"
-  robot.respond /xkcd/i, (res) ->
+  robot.hear /xkcd/i, (res) ->
     robot.http("https://xkcd.com/info.0.json")
       .get() (err, msg, body) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            res.send "LATEST XKCD COMIC\nTitle: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
+            res.send "LATEST xkcd COMIC\nTitle: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
           else
             res.send "There was an error with xkcd. Try again later?"
 
@@ -52,14 +52,13 @@ module.exports = (robot) ->
 
   # Function that activates when you mention the bot, it returns
   # the number of Github's repos from a user
-  robot.respond /list repos (.*)/i, (res) ->
+  robot.respond /list (.*)/i, (res) ->
     gh_user = res.match[1]
     robot.http("https://api.github.com/users/#{gh_user}/repos")
       .get() (err, msg, body) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            # res.send "#{info}"
             for key in info
               res.send "#{info.key.toDict('name')}"
           else
