@@ -50,17 +50,18 @@ module.exports = (robot) ->
             info = JSON.parse(body)
             res.send "Number of public repos: #{Object.keys(info).length}\nWanna list them all? (y/n)"
             robot.hear /(.*)/i, (res2) ->
-              ans = res.match[1]
-              ansResp = null
-              res.send "You answered #{ans.toLowerCase()}."
-              if ans.toLowerCase() is "yes" or ans.toLowerCase() is "y"
-                res.send "Imma list them!"
-              else if ans.toLowerCase() is "no" or ans.toLowerCase() is "n"
-                res.send "Okay!"
-              else
-                res.send "Sorry, I didn't understand that answer. Please try again."
-                clearInterval(ansResp)
-                ansResp = null
+              ans = res.match[2]
+              robot.brain.set 'nAns', 1
+              y_n = robot.brain.get('nAns') * 1 or 0
+              if y_n is 1
+                robot.brain.set 'nAns', 0
+                res.send "You answered #{ans.toLowerCase()}."
+                if ans.toLowerCase() is "yes" or ans.toLowerCase() is "y"
+                  res.send "Imma list them!"
+                else if ans.toLowerCase() is "no" or ans.toLowerCase() is "n"
+                  res.send "Okay!"
+                else
+                  res.send "Sorry, I didn't understand that answer. Please try again."
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
