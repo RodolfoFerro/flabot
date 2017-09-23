@@ -59,6 +59,7 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
+            res.send "#{info}"
             for key in info
               res.send "#{info.key.toDict('name')}"
           else
