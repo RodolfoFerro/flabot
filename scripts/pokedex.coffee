@@ -23,7 +23,7 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            img = JSON.parse(info)
+            img = JSON.parse(info.forms[0].url)
             res.send "Pokémon: #{info.name}\nHeight: #{info.height/10} meters\nWeight: #{info.weight/10} kilograms\nImage: #{img.sprites}\n"
             # ['sprites']['front_default']
           else
