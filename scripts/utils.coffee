@@ -59,8 +59,8 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            for index in info
-              res.send "#{info[index].html_url}"
+            for index, value in info
+              res.send "#{value.html_url}"
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
@@ -73,7 +73,7 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            res.send "Number of public repos: #{Object.keys(info).length}"
+            res.send "Number of public repos: #{Object.keys(info).length}."
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
