@@ -48,7 +48,15 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            res.send "Number of repos: #{Object.keys(info).length}"
+            res.send "Number of public repos: #{Object.keys(info).length}\nWanna list them all? (y/n)"
+            robot.hear /(.*)/i, (res2) ->
+              ans = res.match[1]
+              if ans.toLowerCase() is "yes" or ans.toLowerCase() is "y"
+                res.send "Imma list them!"
+              else if ans.toLowerCase() is "no" or ans.toLowerCase() is "n"
+                res.send "Okay!"
+              else
+                res.send "Sorry, I didn't understand that answer. Please try again."
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
