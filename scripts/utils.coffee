@@ -51,13 +51,13 @@ module.exports = (robot) ->
             res.send "Number of public repos: #{Object.keys(info).length}\nWanna list them all? (y/n)"
             robot.respond /(.*)/i, (res2) ->
               ans = res2.match[1]
-              res.send "You answered #{ans.toLowerCase()}."
-              if ans.toLowerCase() is "yes" or ans.toLowerCase() is "y"
-                res2.send "Imma list them!"
-              else if ans.toLowerCase() is "no" or ans.toLowerCase() is "n"
-                res2.send "Okay!"
-              else
-                res2.send "Sorry, I didn't understand that answer. Please try again."
+            res.send "You answered #{ans.toLowerCase()}."
+            if ans.toLowerCase() is "yes" or ans.toLowerCase() is "y"
+              res2.send "Imma list them!"
+            else if ans.toLowerCase() is "no" or ans.toLowerCase() is "n"
+              res2.send "Okay!"
+            else
+              res2.send "Sorry, I didn't understand that answer. Please try again."
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
