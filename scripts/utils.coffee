@@ -20,9 +20,16 @@ module.exports = (robot) ->
 
   # Function that activates whenever somebody mentions the word "xkcd"
   robot.hear /xkcd/i, (res) ->
-    res.send "xkcd activated"
+    robot.http("https://xkcd.com/info.0.json")
+      .get() (err, msg, body) ->
+        switch msg.statusCode
+          when 200
+            info = JSON.parse(body)
+            res.send "LATEST xkcd COMIC\nTitle: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
+          else
+            res.send "There was an error with xkcd. Try again later?"
 
-  # Function that activates when you mention yout bot, it consumes
+  # Function that activates when you mention the bot, it consumes
   # the Pokeapi looking for Pokémon's info
   robot.respond /pokedex (.*)/i, (res) ->
     pokemon = res.match[1]
@@ -43,8 +50,22 @@ module.exports = (robot) ->
           else
             res.send "That might not be a Pokémon... "
 
-  # Function that activates when you mention yout bot, it lists
-  # the Github's repos from a user
+  # Function that activates when you mention the bot, it returns
+  # the number of Github's repos from a user
+  robot.respond /repos (.*) list/i, (res) ->
+    gh_user = res.match[1]
+    robot.http("https://api.github.com/users/#{gh_user}/repos")
+      .get() (err, msg, body) ->
+        switch msg.statusCode
+          when 200
+            info = JSON.parse(body)
+            for key in info
+              res.send "#{info.key.toDict('name')}"
+          else
+            res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
+
+  # Function that activates when you mention the bot, it returns
+  # the number of Github's repos from a user
   robot.respond /repos (.*)/i, (res) ->
     gh_user = res.match[1]
     robot.http("https://api.github.com/users/#{gh_user}/repos")
@@ -52,18 +73,7 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            res.send "Number of public repos: #{Object.keys(info).length}\nWanna list them all? (y/n)"
-            ans = null
-            robot.hear /(.*)/i, (res2) ->
-              ans = res2.match[1]
-              res.send "You answered #{ans.toLowerCase()}."
-              res.send "#{robot.name}"
-            if ans.toLowerCase() is "yes" or ans.toLowerCase() is "y"
-              res.send "Imma list them!"
-            else if ans.toLowerCase() is "no" or ans.toLowerCase() is "n"
-              res.send "Okay!"
-            else
-              res.send "Sorry, I didn't understand that answer. Please try again."
+            res.send "Number of public repos: #{Object.keys(info).length}"
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
