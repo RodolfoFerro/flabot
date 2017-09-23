@@ -56,7 +56,7 @@ module.exports = (robot) ->
   # the number of Github's repos from a user
   robot.respond /list (.*)/i, (res) ->
     gh_user = res.match[1]
-    robot.http("https://api.github.com/users/#{gh_user}/repos")
+    robot.http("https://api.github.com/users/#{gh_user}/repos?per_page=10000&type=owner")
       .get() (err, msg, body) ->
         switch msg.statusCode
           when 200
