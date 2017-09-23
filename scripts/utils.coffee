@@ -18,6 +18,10 @@ module.exports = (robot) ->
   robot.hear /tacos/i, (res) ->
     res.send "TACOS?! YAAAS! WHEN?! WHERE?! 🌮🌮🌮"
 
+  # Function that activates whenever somebody mentions the word "xkcd"
+  robot.hear /xkcd/i, (res) ->
+    res.send "xkcd activated"
+
   # Function that activates when you mention yout bot, it consumes
   # the Pokeapi looking for Pokémon's info
   robot.respond /pokedex (.*)/i, (res) ->
@@ -50,15 +54,16 @@ module.exports = (robot) ->
             info = JSON.parse(body)
             res.send "Number of public repos: #{Object.keys(info).length}\nWanna list them all? (y/n)"
             ans = null
-            robot.respond /(.*)/i, (res2) ->
+            robot.hear /(.*)/i, (res2) ->
               ans = res2.match[1]
               res.send "You answered #{ans.toLowerCase()}."
-              if ans.toLowerCase() is "yes" or ans.toLowerCase() is "y"
-                res.send "Imma list them!"
-              else if ans.toLowerCase() is "no" or ans.toLowerCase() is "n"
-                res.send "Okay!"
-              else
-                res.send "Sorry, I didn't understand that answer. Please try again."
+              res.send "#{robot.name}"
+            if ans.toLowerCase() is "yes" or ans.toLowerCase() is "y"
+              res.send "Imma list them!"
+            else if ans.toLowerCase() is "no" or ans.toLowerCase() is "n"
+              res.send "Okay!"
+            else
+              res.send "Sorry, I didn't understand that answer. Please try again."
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
