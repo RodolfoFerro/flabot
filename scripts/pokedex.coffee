@@ -25,9 +25,13 @@ module.exports = (robot) ->
             info = JSON.parse(body)
             robot.http("#{info.forms[0].url}")
               .get() (err2, msg2, body2) ->
-                img = JSON.parse(body2)
-                res.send "Pokémon: #{info.name}\nHeight: #{info.height/10} meters\nWeight: #{info.weight/10} kilograms\nImage: #{img.sprites}\n"
-            # ['sprites']['front_default']
+                switch msg.statusCode
+                  when 200
+                    img_var = JSON.parse(body2)
+                    img = img_var.sprites.front_default
+                  else
+                    img = "Image not available by now. Sorry! :("
+                res.send "Pokémon: #{info.name}\nHeight: #{info.height/10} meters\nWeight: #{info.weight/10} kilograms\nImage: #{img}\n"
           else
             res.send "That might not be a Pokémon..."
 
