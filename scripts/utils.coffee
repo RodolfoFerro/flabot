@@ -64,6 +64,7 @@ module.exports = (robot) ->
             repos = ""
             for index, value in info
               repos += "#{value}\n"
+            res.send "#{repos}"
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
