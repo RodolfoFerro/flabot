@@ -59,9 +59,8 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            res.send "#{info}"
-            for key in info
-              res.send "#{info.key.toDict('name')}"
+            for index in info
+              res.send "#{info[index].html_url}"
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
