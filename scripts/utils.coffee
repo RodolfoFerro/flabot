@@ -1,5 +1,7 @@
 # Description:
 #   Script that comsumes the Pokéapi to return Pokémon info.
+#   This also can list a user's public repos and show the last
+#   xkcd comic.
 #
 # Commands:
 #   hubot pokedex <pokemon> - Looks for that Pokémon's info.
@@ -7,9 +9,6 @@
 #   hubot repos <user> - Lists all repos from a user.
 #   xkcd comic - Returns latest xkcd comic.
 #   tacos - Returns custom message.
-#
-# Notes:
-#   <optional notes required for the script>
 #
 # Author:
 #   RodolfoFerro
@@ -63,7 +62,7 @@ module.exports = (robot) ->
             info = JSON.parse(body)
             repos = "Number of public repos: #{Object.keys(info).length}.\n\nList of public repos: \n"
             for index, value in info
-              repos += "#{info[value].html_url}\n"
+              repos += "#{value+1}. #{info[value].html_url}\n"
             res.send "#{repos}"
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
