@@ -53,31 +53,18 @@ module.exports = (robot) ->
             res.send "That might not be a Pokémon... "
 
   # Function that activates when you mention the bot, it returns
-  # the number of Github's repos from a user
-  robot.respond /list (.*)/i, (res) ->
+  # the number and the list of public repos from a user
+  robot.respond /repos (.*)/i, (res) ->
     gh_user = res.match[1]
-    robot.http("https://api.github.com/users/#{gh_user}/repos?per_page=10000&type=owner")
+    robot.http("https://api.github.com/users/#{gh_user}/repos?per_page=100000&type=owner")
       .get() (err, msg, body) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            repos = ""
+            repos = "Number of public repos: #{Object.keys(info).length}.\n\nList of public repos: \n"
             for index, value in info
               repos += "#{info[value].html_url}\n"
             res.send "#{repos}"
-          else
-            res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
-
-  # Function that activates when you mention the bot, it returns
-  # the number of Github's repos from a user
-  robot.respond /repos (.*)/i, (res) ->
-    gh_user = res.match[1]
-    robot.http("https://api.github.com/users/#{gh_user}/repos")
-      .get() (err, msg, body) ->
-        switch msg.statusCode
-          when 200
-            info = JSON.parse(body)
-            res.send "Number of public repos: #{Object.keys(info).length}."
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
