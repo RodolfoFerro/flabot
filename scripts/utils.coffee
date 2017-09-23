@@ -19,13 +19,13 @@ module.exports = (robot) ->
     res.send "TACOS?! YAAAS! WHEN?! WHERE?! 🌮🌮🌮"
 
   # Function that activates whenever somebody mentions the word "xkcd"
-  robot.hear /xkcd/i, (res) ->
+  robot.hear /xkcd comic/i, (res) ->
     res.http("https://xkcd.com/info.0.json")
       .get() (err, msg, body) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            res.send "LATEST xkcd COMIC\nTitle: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
+            res.send "LATEST COMIC\nTitle: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
           else
             res.send "There was an error with xkcd. Try again later?"
 
