@@ -19,6 +19,7 @@ module.exports = (robot) ->
 
   # Return number of interactions
   robot.respond /interactions/i, (res) ->
+    robot.brain.set 'totalInteractions', interactions + 1
     interactions = robot.brain.get('totalInteractions') * 1 or 0
     res.send "Number of interactions: #{interactions}.\nMention me with the \"reset\" command to set this number to zero."
 
