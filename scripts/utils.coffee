@@ -63,7 +63,7 @@ module.exports = (robot) ->
             info = JSON.parse(body)
             repos = ""
             for index, value in info
-              repos += "#{value}\n"
+              repos += "#{info[value].html_url}\n"
             res.send "#{repos}"
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
