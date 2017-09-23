@@ -25,7 +25,7 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            res.send "**== Latest xkcd comic ==**\nTitle: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
+            res.send "Title: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
           else
             res.send "There was an error with xkcd. Try again later?"
 
@@ -59,8 +59,9 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            for key in info
-              res.send "#{info.key.toDict('name')}"
+            res.send "info.name"
+            # for key in info
+            #   res.send "#{info.key.toDict('name')}"
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
