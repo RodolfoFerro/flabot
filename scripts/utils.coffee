@@ -19,15 +19,15 @@ module.exports = (robot) ->
     res.send "TACOS?! YAAAS! WHEN?! WHERE?! 🌮🌮🌮"
 
   # Function that activates whenever somebody mentions the word "xkcd"
-  # robot.hear /xkcd/i, (res) ->
-  #   robot.http("https://xkcd.com/info.0.json")
-  #     .get() (err, msg, body) ->
-  #       switch msg.statusCode
-  #         when 200
-  #           info = JSON.parse(body)
-  #           res.send "Title: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
-  #         else
-  #           res.send "There was an error with xkcd. Try again later?"
+  robot.respond /xkcd/i, (res) ->
+    robot.http("https://xkcd.com/info.0.json")
+      .get() (err, msg, body) ->
+        switch msg.statusCode
+          when 200
+            info = JSON.parse(body)
+            res.send "LATEST XKCD COMIC\nTitle: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
+          else
+            res.send "There was an error with xkcd. Try again later?"
 
   # Function that activates when you mention the bot, it consumes
   # the Pokeapi looking for Pokémon's info
@@ -52,16 +52,16 @@ module.exports = (robot) ->
 
   # Function that activates when you mention the bot, it returns
   # the number of Github's repos from a user
-  robot.respond /repos list (.*)/i, (res) ->
+  robot.respond /list repos (.*)/i, (res) ->
     gh_user = res.match[1]
     robot.http("https://api.github.com/users/#{gh_user}/repos")
       .get() (err, msg, body) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            res.send "info.name"
-            # for key in info
-            #   res.send "#{info.key.toDict('name')}"
+            # res.send "#{info}"
+            for key in info
+              res.send "#{info.key.toDict('name')}"
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
