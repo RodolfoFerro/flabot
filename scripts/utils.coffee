@@ -7,6 +7,9 @@
 #   hubot pokedex <pokemon> - Looks for that Pokémon's info.
 #   hubot pokedex <id> - Looks for that Pokémon's info.
 #   hubot repos <user> - Lists all repos from a user.
+#   hubot interactions - Returns the number of ineractions with the bot.
+#   hubot reset - Sets the number of interactions back to zero.
+#   hubot thank you - Returns "You're welcome!"
 #   xkcd comic - Returns latest xkcd comic.
 #   tacos - Returns custom message.
 #
@@ -14,29 +17,29 @@
 #   RodolfoFerro
 
 module.exports = (robot) ->
+
   # Set initial number of interactions to zero
   interactions = 0
 
-  # Return number of interactions
+  # Return the number of interactions
   robot.respond /interactions/i, (res) ->
     robot.brain.set 'totalInteractions', interactions + 1
     interactions = robot.brain.get('totalInteractions') * 1 or 0
     res.send "Number of interactions: #{interactions}.\nMention me with the \"reset\" command to set this number to zero."
 
-  # Return number of interactions
+  # Reset the number of interactions
   robot.respond /reset/i, (res) ->
     interactions = 0
     robot.brain.set 'totalInteractions', 0
     res.send "Number of interactions set to zero."
 
-
-  # Function that activates whenever somebody mentions the word "tacos"
+  # Functionality that activates whenever somebody mentions the word "tacos"
   robot.hear /tacos/i, (res) ->
     robot.brain.set 'totalInteractions', interactions + 1
     interactions = robot.brain.get('totalInteractions') * 1 or 0
     res.send "TACOS?! YAAAS! WHEN?! WHERE?! 🌮🌮🌮"
 
-  # Function that activates whenever somebody mentions the word "xkcd"
+  # Functionality that returns the latest xkcd comic
   robot.hear /xkcd comic/i, (res) ->
     robot.brain.set 'totalInteractions', interactions + 1
     interactions = robot.brain.get('totalInteractions') * 1 or 0
@@ -49,7 +52,7 @@ module.exports = (robot) ->
           else
             res.send "There was an error with xkcd. Try again later?"
 
-  # Function that activates when you mention the bot, it consumes
+  # Functionality that activates when you mention the bot, it consumes
   # the Pokeapi looking for Pokémon's info
   robot.respond /pokedex (.*)/i, (res) ->
     robot.brain.set 'totalInteractions', interactions + 1
@@ -72,7 +75,7 @@ module.exports = (robot) ->
           else
             res.send "That might not be a Pokémon... "
 
-  # Function that activates when you mention the bot, it returns
+  # Functionality that activates when you mention the bot, it returns
   # the number and the list of public repos from a user
   robot.respond /repos (.*)/i, (res) ->
     robot.brain.set 'totalInteractions', interactions + 1
@@ -90,6 +93,11 @@ module.exports = (robot) ->
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
+  # Thanking Hubot
+  robot.respond /thank you/i, (res) ->
+    res.send "You're welcome!"
+
+  # Error handling
   robot.error (err, res) ->
     robot.brain.set 'totalInteractions', interactions + 1
     interactions = robot.brain.get('totalInteractions') * 1 or 0
