@@ -43,7 +43,7 @@ module.exports = (robot) ->
   # the Github's repos from a user
   robot.respond /repos (.*)/i, (res) ->
     gh_user = res.match[1]
-    robot.http("https://api.github.com/users/#{gh_user}/repos/")
+    robot.http("https://api.github.com/users/#{gh_user}/repos")
       .get() (err, msg, body) ->
         switch msg.statusCode
           when 200
