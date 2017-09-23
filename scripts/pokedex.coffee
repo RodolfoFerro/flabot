@@ -18,15 +18,12 @@ module.exports = (robot) ->
 
   robot.respond /pokedex (.*)/i, (res) ->
     pokemon = res.match[1]
-    res.send "Pokerequest: #{pokemon.toLowerCase()}"
     robot.http("https://pokeapi.co/api/v2/pokemon/#{pokemon.toLowerCase()}/")
       .get() (err, msg, body) ->
-        res.send "#{err}"
-        res.send "#{msg.statusCode}"
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            res.send "Pokémon: #{info.name}\nHeight: #{info.height/10} meters\nWeight: #{info.weight/10} kilograms\nImage: #{info.forms[0].url}\n"
+            res.send "Pokémon: #{info.name}\nHeight: #{info.height/10} meters\nWeight: #{info.weight/10} kilograms\nImage: #{info.forms[0].url.spites}\n"
             # ['sprites']['front_default']
           else
             res.send "That might not be a Pokémon..."
