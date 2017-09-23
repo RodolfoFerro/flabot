@@ -25,7 +25,7 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
-            res.send "LATEST xkcd COMIC\nTitle: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
+            res.send "**== Latest xkcd comic ==**\nTitle: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
           else
             res.send "There was an error with xkcd. Try again later?"
 
@@ -52,7 +52,7 @@ module.exports = (robot) ->
 
   # Function that activates when you mention the bot, it returns
   # the number of Github's repos from a user
-  robot.respond /repos (.*) list/i, (res) ->
+  robot.respond /repos list (.*)/i, (res) ->
     gh_user = res.match[1]
     robot.http("https://api.github.com/users/#{gh_user}/repos")
       .get() (err, msg, body) ->
