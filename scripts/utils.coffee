@@ -5,6 +5,8 @@
 #   hubot pokedex <pokemon> - Looks for that Pokémon's info.
 #   hubot pokedex <id> - Looks for that Pokémon's info.
 #   hubot repos <user> - Lists all repos from a user.
+#   xkcd comic - Returns latest xkcd comic.
+#   tacos - Returns custom message.
 #
 # Notes:
 #   <optional notes required for the script>
@@ -59,8 +61,9 @@ module.exports = (robot) ->
         switch msg.statusCode
           when 200
             info = JSON.parse(body)
+            repos = ""
             for index, value in info
-              res.send "#{value.html_url}"
+              repos += "#{value}\n"
           else
             res.send "Couldn't find a thing. Did you spell correctly that username? 🤔"
 
