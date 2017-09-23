@@ -19,15 +19,15 @@ module.exports = (robot) ->
     res.send "TACOS?! YAAAS! WHEN?! WHERE?! 🌮🌮🌮"
 
   # Function that activates whenever somebody mentions the word "xkcd"
-  robot.hear /xkcd/i, (res) ->
-    robot.http("https://xkcd.com/info.0.json")
-      .get() (err, msg, body) ->
-        switch msg.statusCode
-          when 200
-            info = JSON.parse(body)
-            res.send "Title: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
-          else
-            res.send "There was an error with xkcd. Try again later?"
+  # robot.hear /xkcd/i, (res) ->
+  #   robot.http("https://xkcd.com/info.0.json")
+  #     .get() (err, msg, body) ->
+  #       switch msg.statusCode
+  #         when 200
+  #           info = JSON.parse(body)
+  #           res.send "Title: #{info.title}\nDescription: #{info.alt}\nImage: #{info.img}"
+  #         else
+  #           res.send "There was an error with xkcd. Try again later?"
 
   # Function that activates when you mention the bot, it consumes
   # the Pokeapi looking for Pokémon's info
